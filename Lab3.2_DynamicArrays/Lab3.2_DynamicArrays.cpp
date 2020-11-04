@@ -3,40 +3,19 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-void sort(int* arr, int len)
-{
-	int h = 0;
-	for (int i = 0; i < len; i++)
-	{
-		for (int j = 0; j < len - i - 1; j++)
-		{
-			if (arr[j] > arr[j + 1])
-			{
-				h = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = h;
-			}
-		}
-	}
-}
-
-void write(int* &arr, int* &arr0, int* &arr4, int* len)
+void write(int*& arr, int* len)
 {
 	cout << "Введите длину массива:" << endl;
 	cin >> *len;
 	arr = new int[*len];
-	arr0 = new int[*len];
-	arr4 = new int[*len];
 	cout << "Введите элементы массива:" << endl;
 	for (int i = 0; i < *len; i++)
 	{
 		cin >> arr[i];
-		arr0[i] = arr[i];
-		arr4[i] = arr[i];
 	}
 }
 
-void print(int* arr, int len)
+void print(int* arr, const int& len) 
 {
 	for (int i = 0; i < len; i++)
 	{
@@ -56,73 +35,77 @@ int schet(int a) // функция для определения количес�
 	return count;
 }
 
-void task3(int* &arr, int* &arr0, int len)
+int even_digit_sum(const int& elem)
 {
 	int sum = 0;
-	int G = 0;
-	for (int i = 0; i < len; i++) {
-		int R = schet(arr[i]);
-		if (R % 2 != 0) // если количество разрядов нечетно, то отбрасываем последний
-		{
-			arr[i] /= 10;
-		}
-		while (arr[i] > 0) {
-			sum += arr[i] % 10; // считаем сумму четных разрядов, счет с левого края, начиная с 1
-			arr[i] /= 100;
-		}
-		arr[i] = sum;
-		sum = 0;
+	int elem0 = elem;
+	int R = schet(elem0);
+	if (R % 2 != 0) // если количество разрядов нечетно, то отбрасываем последний
+	{
+		elem0 /= 10;
 	}
-	for (int i = 0; i < len - 1; i++) {
-		for (int j = 0; j < len - i - 1; j++) {
-			if (arr[j] > arr[j + 1]) {
-				G = arr[j];
+	while (elem0 > 0) {
+		sum += elem0 % 10; // считаем сумму четных разрядов, счет с левого края, начиная с 1
+		elem0 /= 100;
+	}
+	return sum;
+}
+
+void even_digit_bubble_sort(int* &arr, const int& len)
+{
+	bool swap;
+	int g = 0;
+	do
+	{
+		swap = false;
+		for (int j = 0; j < len - 1; j++) {
+			if (even_digit_sum(arr[j]) > even_digit_sum(arr[j + 1]))
+			{
+				swap = true;
+				g = arr[j];
 				arr[j] = arr[j + 1];
-				arr[j + 1] = G;
+				arr[j + 1] = g;
 			}
 		}
 	}
+	while (swap);
 	print(arr, len);
-	for (int i = 0; i < len; i++)
-	{
-		arr[i] = arr0[i];
-	}
 }
 
-void task4(int* &arr4, int len)
+void task4(int*& arr, const int& len)
 {
-	int G;
+	int g;
 	for (int i = 0; i < len - 1; i++)
 	{
 		for (int j = 0; j < len - i - 1; j++)
 		{
-			if (arr4[j] % 10 > arr4[j + 1] % 10)
+			if (arr[j] % 10 > arr[j + 1] % 10)
 			{
-				G = arr4[j];
-				arr4[j] = arr4[j + 1];
-				arr4[j + 1] = G;
+				g = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = g;
 			}
 		}
 	}
-		for (int j = 0; j < len - 1; j++)
+	for (int j = 0; j < len - 1; j++)
+	{
+		if (arr[j] % 10 == arr[j + 1] % 10)
 		{
-			if (arr4[j] % 10 == arr4[j + 1] % 10)
+			for (int k = 0; k < len - 1; k++)
 			{
-				for (int k = 0; k < len - 1; k++)
+				for (int l = 0; l < len - k - 1; l++)
 				{
-					for (int l = 0; l < len - k - 1; l++)
+					if (arr[l] < arr[l + 1])
 					{
-						if (arr4[l] < arr4[l + 1])
-						{
-							G = arr4[l];
-							arr4[l] = arr4[l + 1];
-							arr4[l + 1] = G;
-						}
+						g = arr[l];
+						arr[l] = arr[l + 1];
+						arr[l + 1] = g;
 					}
 				}
 			}
 		}
-	print(arr4, len);
+	}
+	print(arr, len);
 }
 
 int main()
@@ -131,8 +114,6 @@ int main()
 	int choice = 0;
 	int len = 0;
 	int* arr = new int[len];
-	int* arr0 = new int[len];
-	int* arr4 = new int[len];
 	while (true)
 	{
 		cout << "Что вы хотите выполнить?\n"
@@ -145,32 +126,30 @@ int main()
 		switch (choice)
 		{
 		case 1:
-			{
-				write(arr, arr0, arr4, &len);
-				break;
-			}
+		{
+			write(arr, &len);
+			break;
+		}
 		case 2:
-			{
-				print(arr, len);
-				break;
-			}
+		{
+			print(arr, len);
+			break;
+		}
 		case 3:
-			{
-				task3(arr, arr0, len);
-				break;
-			}
+		{
+			even_digit_bubble_sort(arr, len);
+			break;
+		}
 		case 4:
-			{
-				task4(arr4, len);
-				break;
-			}
+		{
+			task4(arr, len);
+			break;
+		}
 		default:
-			{
-				delete[] arr;
-				delete[] arr0;
-				delete[] arr4;
-				return 0;
-			}
+		{
+			delete[] arr;
+			return 0;
+		}
 		}
 	}
 }
