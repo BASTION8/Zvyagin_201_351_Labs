@@ -8,6 +8,10 @@ private:
 	double* elems; // элементы
 public:
 	matr();
+	// перегрузка конструктора
+	matr(int i, int j);
+	matr(int i, int j, const double* arr);
+	
 	~matr();
 
 	bool input();//ввод матрицы с клавиатуры
@@ -16,13 +20,11 @@ public:
 	//прибавляет к текущей матрице, 
 	//матрицу, которая указана в аргументе.
 	//результат суммы записывается в текущую
-	//результат суммы возвращается
 	bool sum(const matr* matr2);
 	
 	//умножает текущую матрицу
 	//на матрицу, которая указана в аргументе.
 	//результат произведения записывается в текущую
-	//результат произведения возвращается
 	bool mult(const matr* matr2);
 
 	void mult_by_num(double num); // умножение матрицы на число
@@ -31,5 +33,10 @@ public:
 	double det(); // определитель матрицы
 	int get_columns();
 	int get_rows();
+	// перегрузка функций
+	bool sum(int i, int j, const double* arr);
+	bool mult(int i, int j, const double* arr);
+	bool input(int i, int j);
+	bool input(int i, int j, double* arr);
 };
 

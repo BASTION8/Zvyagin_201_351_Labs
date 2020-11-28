@@ -8,6 +8,22 @@ matr::matr()
 	elems = nullptr;
 }
 
+matr::matr(int i, int j)
+{
+	cols = j;
+	rows = i;
+	elems = new double[cols * rows];
+}
+
+matr::matr(int i, int j, const double* arr)
+{
+	cols = j;
+	rows = i;
+	elems = new double[cols * rows];
+	for (int k = 0; k < rows * cols; k++)
+		elems[k] = arr[k];
+}
+
 matr::~matr()
 {
 	if (elems != nullptr)
@@ -61,7 +77,7 @@ bool matr::mult(const matr* matr2)
 	matr res;
 	res.cols = matr2->cols;
 	res.rows = this->rows;
-	res.elems = new double[double(res.cols) * res.rows]{ 0 };
+	res.elems = new double[res.cols * res.rows]{ 0 };
 	for (int i = 0; i < res.rows; i++)
 		for (int j = 0; j < res.cols; j++)
 			for (int k = 0; k < this->cols; k++)
@@ -112,4 +128,54 @@ int matr::get_columns()
 int matr::get_rows()
 {
 	return rows;
+}
+
+bool matr::sum(int i, int j, const double* arr)
+{
+	if (rows != i || cols != j)
+		return false;
+	for (int i = 0; i < rows * cols; i++)
+		elems[i] = elems[i] + arr[i];
+	return true;
+}
+
+bool matr::mult(int i, int j, const double* arr)
+{
+	if (cols != i)
+		return false;
+	matr res;
+	res.cols = j;
+	res.rows = this->rows;
+	res.elems = new double[res.cols * res.rows]{ 0 };
+	for (int k = 0; k < res.rows; k++)
+		for (int l = 0; l < res.cols; l++)
+			for (int h = 0; h < this->cols; h++)
+				res.elems[k * res.cols + l] += get_elem(k, h) * arr[h * j + l];
+	res.print();
+	return true;
+}
+
+bool matr::input(int i, int j)
+{
+	if (elems != nullptr)
+		delete[] elems;
+	rows = i;
+	cols = j;
+	elems = new double[rows * cols];
+	std::cout << "¬ведите элементы массива:" << std::endl;
+	for (int k = 0; k < rows * cols; k++)
+		std::cin >> elems[k];
+	return true;
+}
+
+bool matr::input(int i, int j, double* arr)
+{
+	if (elems != nullptr)
+		delete[] elems;
+	rows = i;
+	cols = j;
+	elems = new double[rows * cols];
+	for (int k = 0; k < rows * cols; k++)
+		elems[k] = arr[k];
+	return true;
 }
