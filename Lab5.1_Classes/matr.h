@@ -1,4 +1,5 @@
 #pragma once
+#include <istream>
 
 class matr
 {
@@ -29,7 +30,6 @@ public:
 
 	void mult_by_num(double num); // умножение матрицы на число
 	double trace(); // след матрицы
-	void null_elem();
 	double det(); // определитель матрицы
 	int get_columns();
 	int get_rows();
@@ -38,5 +38,13 @@ public:
 	bool mult(int i, int j, const double* arr);
 	bool input(int i, int j);
 	bool input(int i, int j, double* arr);
+	// перегрузка операторов
+	friend std::istream& operator>> (std::istream& input, matr& matr_input); // перегруженный оператор ввода
+	friend std::ostream& operator<< (std::ostream& output, const matr& matr_output); // перегруженный оператор вывода
+	friend matr& operator+ (const matr& lhs, const matr& rhs);
+	friend matr operator- (const matr& lhs, const matr& rhs);
+	matr operator- ();
+	friend matr operator* (const matr& lhs, const matr& rhs);
+	matr operator* (int num);
 };
 

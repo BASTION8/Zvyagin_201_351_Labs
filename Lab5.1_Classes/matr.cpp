@@ -179,3 +179,78 @@ bool matr::input(int i, int j, double* arr)
 		elems[k] = arr[k];
 	return true;
 }
+
+matr matr::operator-()
+{
+	for (int i = 0; i < cols * rows; i++)
+	{
+		elems[i] = -elems[i];
+	}
+	return *this;
+}
+
+matr matr::operator*(int num)
+{
+	for (int i = 0; i < cols * rows; i++)
+	{
+		elems[i] = elems[i] * num;
+	}
+	return *this;
+}
+
+std::ostream& operator<<(std::ostream& output, const matr& matr_output)
+{
+	for (int i = 0; i < matr_output.rows; i++)
+	{
+		for (int j = 0; j < matr_output.cols; j++)
+			output << matr_output.elems[i * matr_output.cols + j] << "\t";
+		output << std::endl; 
+	}
+	return output;
+}
+
+matr& operator+(const matr& lhs, const matr& rhs)
+{
+	matr res(lhs);
+	if (lhs.cols == rhs.cols || lhs.rows == rhs.rows)
+		for (int i = 0; i < lhs.rows * lhs.cols; i++)
+			res.elems[i] = lhs.elems[i] + rhs.elems[i];
+	return res;
+}
+
+matr operator-(const matr& lhs, const matr& rhs)
+{
+	matr res(lhs);
+	if (lhs.cols == rhs.cols || lhs.rows == rhs.rows){}
+		for (int i = 0; i < lhs.rows * lhs.cols; i++)
+			res.elems[i] = lhs.elems[i] - rhs.elems[i];
+	return res;
+}
+
+matr operator*(const matr& lhs, const matr& rhs)
+{
+	matr res(lhs);
+	if (lhs.cols == rhs.rows)
+	{
+		res.cols = rhs.cols;
+		res.rows = rhs.rows;
+		res.elems = new double[res.cols * res.rows]{ 0 };
+		for (int i = 0; i < res.rows; i++)
+			for (int j = 0; j < res.cols; j++)
+				for (int k = 0; k < lhs.cols; k++)
+					res.elems[i * res.cols + j] += lhs.elems[i * lhs.cols + k] * rhs.elems[k * rhs.cols + j];
+	}
+	return res;
+}
+
+std::istream& operator>>(std::istream& input, matr& matr_input)
+{
+	for (int i = 0; i < matr_input.rows; i++)
+	{
+		for (int j = 0; j < matr_input.cols; j++)
+			input >> matr_input.elems[i * matr_input.cols + j];
+	}
+	return input; 
+}
+
+

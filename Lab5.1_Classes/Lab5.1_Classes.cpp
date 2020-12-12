@@ -80,6 +80,8 @@ int main()
 		case 8:
 			{
 				matrA.print();
+				// вывод с помощью перегрузки
+				std::cout << matrA;
 				break;
 			}
 		case 9:
