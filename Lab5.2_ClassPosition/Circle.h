@@ -1,7 +1,16 @@
 #pragma once
 #include "Position.h"
 class Circle :
-    public Position
+    virtual public Position
 {
+protected:
+	int radius;
+public:
+	Circle();
+	Circle(int l_x, int l_y, int l_rad);
+	~Circle();
+
+	int get_rad();
+	void change_len_rad(int l_rad);
 };
 

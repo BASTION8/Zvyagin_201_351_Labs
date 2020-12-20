@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{086b6bae-1ac0-4bc9-81ae-249bfd92bfa9}</ProjectGuid>
-    <RootNamespace>Lab52ClassPosition</RootNamespace>
+    <ProjectGuid>{9265ac08-1b55-4250-a577-7744329389ae}</ProjectGuid>
+    <RootNamespace>Lab61Stack</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,17 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Circle.cpp" />
-    <ClCompile Include="CircleInSquare.cpp" />
-    <ClCompile Include="Lab5.2_ClassPosition.cpp" />
-    <ClCompile Include="Position.cpp" />
-    <ClCompile Include="Square.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Circle.h" />
-    <ClInclude Include="CircleInSquare.h" />
-    <ClInclude Include="Position.h" />
-    <ClInclude Include="Square.h" />
+    <ClCompile Include="Lab6.1_Stack.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
