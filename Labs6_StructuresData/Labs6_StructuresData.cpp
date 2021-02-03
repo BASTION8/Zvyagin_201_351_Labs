@@ -6,6 +6,7 @@
 #include <queue>
 #include <list>
 #include <map>
+#include <set>
 #include <unordered_set>
 
 int task1()
@@ -117,60 +118,33 @@ void task3()
 	}
 }
 
-class student1
-{
-public:
-
-	student1(std::string s, int m)
-	{
-		account = s;
-		mark = m;
-	}
-
-	std::string account;
-	int mark;
-
-	friend std::ostream& operator << (std::ostream& os, student1 p)
-	{
-		os << p.account << ": " << p.mark;
-
-		return os;
-	}
-
-	bool operator == (const student1& p) const
-	{
-		return p.account == account;
-	}
-};
-
-// структура для хэша
-struct hash
-{
-	size_t operator()(const student1& v) const
-	{
-		return std::hash<std::string>{}(v.account);
-	}
-};
-
 void task4()
 {
-	std::unordered_set<student1, hash> pupils;
+	std::set<std::string> logs;
+	std::vector<std::string> logs_mark;
+	int num;
+	int size = 0;
+	std::string mark; // оценка студента 
+	std::string log; // номер студента
 
-	srand(time(0));
-
-	int n = 10;
-
-	std::cout << "Все попытки:\n\n";
-	for (int i = 0; i < n; i++)
+	std::cout << "Введите количество студентов:" << std::endl;
+	std::cin >> num;
+	std::cout << "Введите журнал и оценку для каждого студента:" << std::endl;
+	for (int i = 0; i < num; i++)
 	{
-		student1 p("аккаунт " + std::to_string(1 + rand() % 10), rand() % 101);
-
-		std::cout << p << std::endl;
-
-		pupils.insert(p);
+		std::cin >> log >> mark;
+		logs.insert(log);
+		if (logs.size() > size) // Условие, при котором будет сфомирована оценка
+		{
+			logs_mark.push_back(log + " - " + mark);
+		}
+		size = logs.size();
 	}
-	std::cout << "\nПринятые запросы:\n";
-	for (auto& i : pupils) std::cout << i << std::endl;
+	std::cout << "Журнал - оценка:" << std::endl;
+	for (int i = 0; i < logs_mark.size(); i++) // Цикл вывода номера студента и его оценки
+	{
+		std::cout << logs_mark[i] << std::endl;
+	}
 }
 
 void task5()
